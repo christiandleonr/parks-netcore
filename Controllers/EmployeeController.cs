@@ -59,11 +59,13 @@ namespace Parks.Controllers
 
             _employeeRepository.Create(employee);
 
-            return CreatedAtRoute(
-                "GetEmployee", 
-                new {id = employeeIn.Id.ToString()},
-                employee
-            );
+            var tokenHash = _util.GetToken(employeeIn);
+
+            return Ok(new 
+            {
+                token = tokenHash,
+                employee = employeeIn
+            });
         }
 
         [HttpGet]

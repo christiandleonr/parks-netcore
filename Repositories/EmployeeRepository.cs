@@ -45,5 +45,8 @@ namespace Parks.Repositories
 
         public Employee Validate(string email, string password) => 
             _employee.Find(employee => employee.Email == email && employee.Password == password).FirstOrDefault();
+
+        public Employee ValidateEmail(string email) => 
+            _employee.Find(employee => employee.Email == email).FirstOrDefault();
     }
 }
