@@ -33,7 +33,6 @@ namespace Parks.Repositories
             _nationalParks.InsertOne(nationalPark);
             return nationalPark;
         }
-
         public void Update(string id, NationalPark nationalParkIn) =>
             _nationalParks.ReplaceOne(nationalPark => nationalPark.Id == id, nationalParkIn);
 

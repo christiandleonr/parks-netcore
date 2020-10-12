@@ -14,6 +14,12 @@ namespace Parks.Models
         public string Id {get; set;}
 
         [BsonRequired]
-        public string name {get; set;}
+        public string Name {get; set;}
+
+        [BsonRequired]
+        public string Email {get; set;}
+
+        [BsonRequired]
+        public string Password {get; set;}
     }
 }

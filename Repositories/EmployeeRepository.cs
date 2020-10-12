@@ -42,5 +42,8 @@ namespace Parks.Repositories
 
         public void Update(string id, Employee employeeIn) =>
             _employee.ReplaceOne(employee => employee.Id == id, employeeIn);
+
+        public Employee Validate(string email, string password) => 
+            _employee.Find(employee => employee.Email == email && employee.Password == password).FirstOrDefault();
     }
 }

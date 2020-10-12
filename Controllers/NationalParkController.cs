@@ -8,6 +8,7 @@ using MongoDB.Driver;
 using Parks.Services.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Parks.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Parks.Controllers
 {
@@ -24,9 +25,11 @@ namespace Parks.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<NationalPark>> Get() => _nationalParkRepository.Get();
 
         [HttpGet("{id:length(24)}", Name = "GetNationalPark")]
+        [Authorize]
         public ActionResult<NationalPark> Get(string id)
         {
             var nationalPark = _nationalParkRepository.Get(id);
@@ -40,6 +43,7 @@ namespace Parks.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult<NationalPark> Create(NationalPark nationalPark)
         {
             _nationalParkRepository.Create(nationalPark);
@@ -48,6 +52,7 @@ namespace Parks.Controllers
         }
 
         [HttpPut("id:length(24)")]
+        [Authorize]
         public IActionResult Update(string id, NationalPark nationalParkIn)
         {
             var nationalPark = _nationalParkRepository.Get(id);
@@ -63,6 +68,7 @@ namespace Parks.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public IActionResult Delete(string id)
         {
             var nationalPark = _nationalParkRepository.Get(id);

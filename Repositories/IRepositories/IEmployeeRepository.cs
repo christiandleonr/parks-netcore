@@ -20,5 +20,7 @@ namespace Parks.Repositories.IRepositories
         public void Remove(Employee employeeIn);
 
         public void Remove(string id);
+
+        public Employee Validate(string email);
     }
 }

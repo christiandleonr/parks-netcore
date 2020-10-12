@@ -14,6 +14,9 @@ using Microsoft.Extensions.Options;
 using Parks.Services.Configuration;
 using Parks.Repositories;
 using Parks.Repositories.IRepositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Parks
 {
@@ -29,6 +32,28 @@ namespace Parks
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // 1. Add Authentication Services
+            var key = Encoding.ASCII.GetBytes(Configuration["Auth:SecretKey"]);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = $"{Configuration["Auth0:Domain"]}";
+                options.Audience = $"{Configuration["Auth0:Audience"]}";
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
             // Settings configuration for MongoDB parks database
             services.Configure<ParksDatabaseSettings>(
                 Configuration.GetSection(nameof(ParksDatabaseSettings))
@@ -54,6 +79,8 @@ namespace Parks
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

@@ -8,6 +8,8 @@ using MongoDB.Driver;
 using Parks.Services.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Parks.Repositories;
+using Parks.Utils;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Parks.Controllers
 {
@@ -17,17 +19,60 @@ namespace Parks.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly Util _util;
 
-        public EmployeeController(IEmployeeRepository employeeRepository)
+        public EmployeeController(IEmployeeRepository employeeRepository, Util util)
         {
             _employeeRepository = employeeRepository;
+            _util = util;
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public  ActionResult<Employee> Login(Employee employeeIn)
+        {
+            var employee = _employeeRepository.Validate(employeeIn.Email, employeeIn.Password);
+
+            if (employee == null)
+            {
+                return BadRequest("There is no user with that email or password");
+            }
+
+            var tokenHash = _util.GetToken(employeeIn);
+
+            return Ok(new
+            {
+                token = tokenHash,
+                employee = employeeIn
+            });
+        }
+
+        [HttpPost]
+        public ActionResult<Employee> Create(Employee employeeIn)
+        {
+            var employee = _employeeRepository.ValidateEmail(employeeIn.Email);
+
+            if (employee == null)
+            {
+                return BadRequest("This email is already registered");
+            }
+
+            _employeeRepository.Create(employee);
+
+            return CreatedAtRoute(
+                "GetEmployee", 
+                new {id = employeeIn.Id.ToString()},
+                employee
+            );
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult<List<Employee>> Get() =>
             _employeeRepository.Get();
 
         [HttpGet("{id:length(24)}", Name = "GetEmployee")]
+        [Authorize]
         public ActionResult<Employee> Get(string id)
         {
             var employee = _employeeRepository.Get(id);
@@ -40,19 +85,8 @@ namespace Parks.Controllers
             return employee;
         }
 
-        [HttpPost]
-        public ActionResult<Employee> Create(Employee employee)
-        {
-            _employeeRepository.Create(employee);
-
-            return CreatedAtRoute(
-                "GetEmployee", 
-                new {id = employee.Id.ToString()},
-                employee
-            );
-        }
-
         [HttpPut]
+        [Authorize]
         public IActionResult Update(string id, Employee employeeIn)
         {
             var employee = _employeeRepository.Get(id);
@@ -68,6 +102,7 @@ namespace Parks.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public IActionResult Delete(string id)
         {
             var employee = _employeeRepository.Get(id);

@@ -28,3 +28,11 @@ Z:\Trabajo\Proyectos y Cursos\RESTFull ASP .NET Core\Parks\obj\Debug\netcoreapp3
 Z:\Trabajo\Proyectos y Cursos\RESTFull ASP .NET Core\Parks\obj\Debug\netcoreapp3.1\Parks.dll
 Z:\Trabajo\Proyectos y Cursos\RESTFull ASP .NET Core\Parks\obj\Debug\netcoreapp3.1\Parks.pdb
 Z:\Trabajo\Proyectos y Cursos\RESTFull ASP .NET Core\Parks\obj\Debug\netcoreapp3.1\Parks.genruntimeconfig.cache
+Z:\Trabajo\Proyectos y Cursos\RESTFull ASP .NET Core\Parks\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+Z:\Trabajo\Proyectos y Cursos\RESTFull ASP .NET Core\Parks\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+Z:\Trabajo\Proyectos y Cursos\RESTFull ASP .NET Core\Parks\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+Z:\Trabajo\Proyectos y Cursos\RESTFull ASP .NET Core\Parks\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+Z:\Trabajo\Proyectos y Cursos\RESTFull ASP .NET Core\Parks\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+Z:\Trabajo\Proyectos y Cursos\RESTFull ASP .NET Core\Parks\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+Z:\Trabajo\Proyectos y Cursos\RESTFull ASP .NET Core\Parks\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+Z:\Trabajo\Proyectos y Cursos\RESTFull ASP .NET Core\Parks\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
